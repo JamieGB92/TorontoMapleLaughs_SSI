@@ -63,5 +63,13 @@ public class World {
         }
 
     }
+    public void pause(float deltaTime)
+    {
+        
+        while(tickTime>tickTime)
+        {
+
+        }
+    }
 
 }

@@ -77,8 +77,8 @@ public class GameScreen extends Screen{
     float spawnTime2=4.0f;
     float fireRate =20.0f;
     float fireRate2=6.0f;
-    int score = 450;
-    int numberOfLives = 2;
+    int score = 0;
+    int numberOfLives = 3;
     float shotGunTimer=0.0f;
     private boolean hasShotgun()
     {
@@ -159,7 +159,7 @@ public class GameScreen extends Screen{
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()));
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()*2));
         random=new Random();
-        state=GameState.Runningb;
+        state=GameState.Running;
 
     }
     @Override
@@ -219,8 +219,13 @@ public class GameScreen extends Screen{
                     if(Settings.soundEnabled=true)
                         Assets.gunShot_sound.play(1);
 
-                    world.m_player.m_projectile.add(new Projectile(world.m_player.posX - 80, world.m_player.posY - 100));
-                    //add shot gun bool here
+                    if (hasShotgun()) {
+                        world.m_player.m_projectile.add(new Projectile(world.m_player.posX - 80, world.m_player.posY - 100));
+                        world.m_player.m_projectile2.add(new Projectile(world.m_player.posX - 80, world.m_player.posY - 100));
+                        world.m_player.m_projectile3.add(new Projectile(world.m_player.posX - 80, world.m_player.posY - 100));
+                    } else {
+                        world.m_player.m_projectile.add(new Projectile(world.m_player.posX - 80, world.m_player.posY - 100));
+                    }
                 }
 
                 if (inBounds(event, pauseButtonXpos, pauseButtonYpos, pauseButton.getWidth(), pauseButton.getHeight() + 100)) {
@@ -299,19 +304,101 @@ public class GameScreen extends Screen{
             world.m_pickUpList.add(new PickUp(x, y, t, time));
             puTime += 5;
         }
-        //endregion  //region spawn pickups
+        //endregion
+        //region check pickup collision and type
+        int puListSize = world.m_pickUpList.size();
+        for (int i = 0; i < puListSize; i++) {
+            PickUp curPickup = world.m_pickUpList.get(i);
+            int AxMin = world.m_player.posX;
+            int AyMin = world.m_player.posY;
+            int AxMax = AxMin + (playerPixmap.getWidth() / 2);
+            int AyMax = AyMin + (playerPixmap.getHeight() / 2);
+            int BxMin = curPickup.xPos;
+            int ByMin = curPickup.yPos;
+            int BxMax = 0;
+            int ByMax = 0;
+            int type = curPickup.type;
+            switch (type) {
+                case 0:
+                    if (curPickup.time < timePassed) {
+                        world.m_pickUpList.remove(i);
+                        puListSize--;
+                    } else {
+                        BxMax = BxMin + (healthPickup_B.getWidth() / 2);
+                        ByMax = ByMin + (healthPickup_B.getHeight() / 2);
+                        if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                                && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
+                            if (numberOfLives < 3) {
+                                numberOfLives++;
+                            }
+                            world.m_pickUpList.remove(i);
+                            puListSize--;
+                        }
+                    }
+                    break;
+                case 1:
+                    if (curPickup.time < timePassed) {
+                        world.m_pickUpList.remove(i);
+                        puListSize--;
+                    } else {
+                        BxMax = BxMin + (ShotGunPickup.getWidth() / 2);
+                        ByMax = ByMin + (ShotGunPickup.getHeight() / 2);
+                        if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                                && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
+                            if (shotGunTimer <= 0) {
+                                shotGunTimer += 20;
+                            }
+                            world.m_pickUpList.remove(i);
+                            puListSize--;
 
-        if (timePassed >= puTime) {
-            int x = 0;
-            x = random.nextInt(690);
-            int y = 0;
-            y = random.nextInt(1000);
-            int t;
-            t = random.nextInt(3);
-            float time = timePassed + pickTimer;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (curPickup.time < timePassed) {
+                        world.m_pickUpList.remove(i);
+                        puListSize--;
+                    }
+                    else {
+                        BxMax = BxMin + (SheildPickup.getWidth() / 2);
+                        ByMax = ByMin + (SheildPickup.getHeight() / 2);
 
-            world.m_pickUpList.add(new PickUp(x, y, t, time));
-            puTime += 5;
+                        if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                                && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax))
+                        {
+                            if (!hasSheild())
+                            {
+                                sheildTimer = timePassed + 10.0f;
+                                numSheild += 2;
+                            }
+                            else
+                            {
+                                if (numSheild > 2)
+                                {
+                                    numSheild++;
+                                }
+                                sheildTimer += 10;
+                            }
+
+                            world.m_pickUpList.remove(i);
+                            puListSize--;
+                        }
+
+
+                    }
+                    break;
+                case 3:
+                    BxMax=BxMin+bombpickup.getWidth()/2;
+                    ByMax=ByMin+bombpickup.getHeight()/2;
+                    if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                            && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax))
+                    {
+                        world.m_EnimyList2.clear();
+                        world.m_pickUpList.remove(i);
+                    }
+                    break;
+            }
+
         }
         //endregion
 
@@ -344,15 +431,28 @@ public class GameScreen extends Screen{
 
         projectileSpeed = 20;
         int firedBullets = world.m_player.m_projectile.size();
-
+        int firedBulletsA = world.m_player.m_projectile2.size();
+        int firedBulletsB = world.m_player.m_projectile3.size();
         for (int j = 0; j < firedBullets; j++) {
-            world.m_player.m_projectile.get(j).Posy -= projectileSpeed;
-            if (world.m_player.m_projectile.get(j).Posy < -630) {
-                world.m_player.m_projectile.remove(j);
-                firedBullets--;
+            if (j <= world.m_player.m_projectile.size()) {
+                world.m_player.m_projectile.get(j).Posy -= projectileSpeed;
             }
 
         }
+        for (int k = 0; k < firedBulletsA; k++) {
+            if (k < world.m_player.m_projectile2.size()) {
+                world.m_player.m_projectile2.get(k).Posy -= projectileSpeed;
+                world.m_player.m_projectile2.get(k).Posx -= projectileSpeed / 2;
+            }
+        }
+        for (int l = 0; l < firedBulletsB; l++) {
+            if (l < world.m_player.m_projectile3.size()) {
+                world.m_player.m_projectile3.get(l).Posy -= projectileSpeed;
+                world.m_player.m_projectile3.get(l).Posx += projectileSpeed / 2;
+            }
+
+        }
+
 
 
 
@@ -395,8 +495,7 @@ public class GameScreen extends Screen{
 
                 if ((AxMin >= CxMin && AxMin <= CxMax || AxMax >= CxMin && AxMax <= CxMax)
                         && (AyMin >= CyMin && AyMin <= CyMax || AyMax >=CyMin && AyMax <= CyMax)) {
-                    curEnimy.e_ProjectileList.remove(h);
-                    projetileList--;
+
                     if(Settings.soundEnabled)
                         if (hasSheild()) {
                             numSheild--;
@@ -413,13 +512,15 @@ public class GameScreen extends Screen{
                                 game.submitScore(score);
                             }
                         }
+                    curEnimy.e_ProjectileList.remove(h);
+                    projetileList--;
 
                 }
             }
             //collision check of enimy hitting player
             if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
                     && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
-                world.m_EnimyList2.remove(g);
+
                 if (Settings.soundEnabled) {
                     Assets.explosion_sound.play(1);
                 }
@@ -438,7 +539,7 @@ public class GameScreen extends Screen{
                         game.submitScore(score);
                     }
                 }
-
+                world.m_EnimyList.remove(g);
                 enimyList--;
             }
 
@@ -472,6 +573,60 @@ public class GameScreen extends Screen{
 
                 }
 
+            }
+            for (int i = 0; i < firedBulletsA; i++) {
+                Projectile curPprojectile = world.m_player.m_projectile2.get(i);
+                int p_AxMin = curPprojectile.Posx;
+                int p_AyMin = curPprojectile.Posy;
+                int p_AxMax = p_AxMin + (projectilePic.getWidth() / 2);
+                int p_AyMax = p_AyMin + (projectilePic.getHeight() / 2);
+
+                int p_BxMin = curEnimy.posX;
+                int p_ByMin = curEnimy.posY;
+                int p_BxMax = BxMin + (lvl2EnimyPixmap.getWidth());
+                int p_ByMax = ByMin + (lvl2EnimyPixmap.getHeight());
+
+
+                //collision check player projectile hitting enimy
+                if ((p_AxMin >= p_BxMin && p_AxMin <= p_BxMax || p_AxMax >= p_BxMin && p_AxMax <= p_BxMax)
+                        && (p_AyMin >= p_ByMin && p_AyMin <= p_ByMax || p_AyMax >= p_ByMin && p_AyMax <= p_ByMax)) {
+
+                    world.m_player.m_projectile2.remove(i);
+                    firedBulletsA--;
+                    world.m_EnimyList.remove(g);
+                    enimyList--;
+                    if (Settings.soundEnabled)
+                        Assets.explosion_sound.play(1);
+                    score += 50;
+
+                }
+            }
+            for (int i = 0; i < firedBulletsB; i++) {
+                Projectile curPprojectile = world.m_player.m_projectile3.get(i);
+                int p_AxMin = curPprojectile.Posx;
+                int p_AyMin = curPprojectile.Posy;
+                int p_AxMax = p_AxMin + (projectilePic.getWidth() / 2);
+                int p_AyMax = p_AyMin + (projectilePic.getHeight() / 2);
+
+                int p_BxMin = curEnimy.posX;
+                int p_ByMin = curEnimy.posY;
+                int p_BxMax = BxMin + (lvl2EnimyPixmap.getWidth());
+                int p_ByMax = ByMin + (lvl2EnimyPixmap.getHeight());
+
+
+                //collision check player projectile hitting enimy
+                if ((p_AxMin >= p_BxMin && p_AxMin <= p_BxMax || p_AxMax >= p_BxMin && p_AxMax <= p_BxMax)
+                        && (p_AyMin >= p_ByMin && p_AyMin <= p_ByMax || p_AyMax >= p_ByMin && p_AyMax <= p_ByMax)) {
+
+                    world.m_player.m_projectile3.remove(i);
+                    firedBulletsB--;
+                    world.m_EnimyList.remove(g);
+                    enimyList--;
+                    if (Settings.soundEnabled)
+                        Assets.explosion_sound.play(1);
+                    score += 50;
+
+                }
             }
             //boundry check
             if (curEnimy.posX > 800 || curEnimy.posX < -100 || curEnimy.posY > 1200) {
