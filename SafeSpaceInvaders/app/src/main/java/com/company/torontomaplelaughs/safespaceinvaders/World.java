@@ -24,6 +24,7 @@ public class World {
 
     public List<Enimy_TypeA> m_EnimyList;
     public List<Enimy_TypeB> m_EnimyList2;
+    public List<Enimy_TypeC> m_EnimyList3;
     public List<PickUp> m_pickUpList;
 
 
@@ -45,6 +46,7 @@ public class World {
         m_player=new Player(500,500);
         m_EnimyList=new ArrayList<>();
         m_EnimyList2=new ArrayList<>();
+        m_EnimyList3=new ArrayList<>();
         m_pickUpList=new ArrayList<>();
 
     }
