@@ -134,9 +134,9 @@ public class GameScreen extends Screen {
     Random random;
     //endregion
 
-    public GameScreen(Game game) {
+    public GameScreen(Game game, GameState s) {
         super(game);
-<<<<<<< HEAD
+
         world=new World();
         mainMenuButton=Assets.mainMenulogo;
         fireButton=Assets.fireButton;
@@ -157,8 +157,8 @@ public class GameScreen extends Screen {
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()));
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()*2));
         random=new Random();
-        state=GameState.Running;
-=======
+        state=s;
+
         world = new World();
         mainMenuButton = Assets.mainMenulogo;
         fireButton = Assets.fireButton;
@@ -182,8 +182,8 @@ public class GameScreen extends Screen {
         world.m_BgList2.add(new BackGround(0, -BackGroundPic2.getHeight()));
         world.m_BgList2.add(new BackGround(0, -BackGroundPic2.getHeight() * 2));
         random = new Random();
-        state = GameState.Runningc;
->>>>>>> master
+        //state = GameState.Runningc;
+
 
     }
 
@@ -663,14 +663,10 @@ public class GameScreen extends Screen {
             world.m_EnimyList2.clear();
             world.m_EnimyList.clear();
             world.m_player.m_projectile.clear();
-<<<<<<< HEAD
+            game.unlockLevel1();
             game.setScreen(new Level1Trans(game));
             state=GameState.Runningb;
-=======
-            state = GameState.Runningb;
->>>>>>> master
 
-            //Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_cold_as_icesis));
 
         }
         if (firedBullets == 500) {
@@ -1181,6 +1177,15 @@ public class GameScreen extends Screen {
         }
         world.update(deltaTime);//update world clock
 
+        if (score == 2000) {
+            world.m_EnimyList2.clear();
+            world.m_EnimyList.clear();
+            world.m_player.m_projectile.clear();
+            game.unlockLevel2();
+            game.setScreen(new Level2Trans(game));
+            state = GameState.Runningc;
+        }
+
     }
 
     private void updateRunningc(List<TouchEvent> touchEvents, float m_AccelX, float m_AccelY, float deltaTime) {
@@ -1282,14 +1287,12 @@ public class GameScreen extends Screen {
         if (timePassed >= spawnTime2) {
             if (enimyList <= maxEnimycount) {
 
-               int temp=random.nextInt(7);
-               if(old!=temp) {
-                   spawnChoose = temp;
-               }
-               else
-               {
-                   spawnChoose=random.nextInt(11);
-               }
+                int temp = random.nextInt(7);
+                if (old != temp) {
+                    spawnChoose = temp;
+                } else {
+                    spawnChoose = random.nextInt(11);
+                }
 
                 switch (spawnChoose) {
                     case 0:
@@ -1328,16 +1331,15 @@ public class GameScreen extends Screen {
                         world.m_EnimyList3.add(new Enimy_TypeC(ECA_Spawner1_PosX, ECA_Spawner1_PosY, fireRate2, deltaTime, -6, 7));
                         break;
                     case 9:
-                        world.m_EnimyList3.add(new Enimy_TypeC(ECA_Spawner2_PosX, ECA_Spawner2_PosY, fireRate2, deltaTime,0 , 14));
+                        world.m_EnimyList3.add(new Enimy_TypeC(ECA_Spawner2_PosX, ECA_Spawner2_PosY, fireRate2, deltaTime, 0, 14));
                         break;
                     case 10:
-                        world.m_EnimyList3.add(new Enimy_TypeC(ECA_Spawner3_PosX, ECA_Spawner3_PosY, fireRate2, deltaTime,5 , -9));
+                        world.m_EnimyList3.add(new Enimy_TypeC(ECA_Spawner3_PosX, ECA_Spawner3_PosY, fireRate2, deltaTime, 5, -9));
                         break;
-
 
 
                 }
-                old=spawnChoose;
+                old = spawnChoose;
             }
             spawnTime2 += 1;
         }
@@ -1351,16 +1353,12 @@ public class GameScreen extends Screen {
             y = random.nextInt(1000);
             int t;
             t = random.nextInt(4);
-            if(t==3)
-            {
-                int temp=random.nextInt(10);
-                if(temp>=5)
-                {
-                    t=random.nextInt(4);
-                }
-                else if(temp<=4)
-                {
-                    t=3;
+            if (t == 3) {
+                int temp = random.nextInt(10);
+                if (temp >= 5) {
+                    t = random.nextInt(4);
+                } else if (temp <= 4) {
+                    t = 3;
                 }
             }
             float time = timePassed + pickTimer;
@@ -1515,8 +1513,8 @@ public class GameScreen extends Screen {
             int projetileList = curEnimy.e_ProjectileList.size();
             for (int h = 0; h < projetileList; h++) {
                 Projectile curProjectile = curEnimy.e_ProjectileList.get(h);
-                curProjectile.Posy += eProjectileSpeedLv2/4;
-                curProjectile.Posx += eProjectileSpeedLv2/8;
+                curProjectile.Posy += eProjectileSpeedLv2 / 4;
+                curProjectile.Posx += eProjectileSpeedLv2 / 8;
                 int CxMin = curProjectile.Posx;
                 int CyMin = curProjectile.Posy;
                 int CxMax = CxMin + (projectilePic.getWidth() / 2);
@@ -1556,8 +1554,8 @@ public class GameScreen extends Screen {
             int projetileList2 = curEnimy.e_ProjectileList2.size();
             for (int h = 0; h < projetileList2; h++) {
                 Projectile curProjectile = curEnimy.e_ProjectileList2.get(h);
-                curProjectile.Posy += eProjectileSpeedLv2/4;
-                curProjectile.Posx += -eProjectileSpeedLv2/8;
+                curProjectile.Posy += eProjectileSpeedLv2 / 4;
+                curProjectile.Posx += -eProjectileSpeedLv2 / 8;
                 int CxMin = curProjectile.Posx;
                 int CyMin = curProjectile.Posy;
                 int CxMax = CxMin + (projectilePic.getWidth() / 2);
@@ -1704,73 +1702,75 @@ public class GameScreen extends Screen {
                 }
             }
             //endregion
-<<<<<<< HEAD
-
-        if(score==2000) {
-            world.m_EnimyList2.clear();
-            world.m_EnimyList.clear();
-            world.m_player.m_projectile.clear();
-            game.setScreen(new Level2Trans(game));
-            //state=GameState.Runningb;
-        }
-
-        if(sheildTimer<timePassed)
-        {
-            sheildTimer=0;
-            numSheild=0;
-=======
-            //region boundry check
-            if (curEnimy.posX > 800 || curEnimy.posX < -100 || curEnimy.posY > 1200) {
-                world.m_EnimyList3.remove(g);
-                enimyList--;
-            }//endregion
-
-            //update enimy position
-
-        }
 
 
-        //endregion
-        //region player projectil boundry check
-        for (int j = 0; j < firedBullets; j++) {
-
-            if (world.m_player.m_projectile.get(j).Posy < -630 ||
-                    world.m_player.m_projectile.get(j).Posx > 750 ||
-                    world.m_player.m_projectile.get(j).Posx < -200) {
-                world.m_player.m_projectile.remove(j);
-                firedBullets--;
-
+            if (score == 4000) {
+                world.m_EnimyList2.clear();
+                world.m_EnimyList.clear();
+                world.m_player.m_projectile.clear();
+                game.unlockLevel3();
+                game.setScreen(new Level3Trans(game));
+                //state=GameState.Runningb;
             }
->>>>>>> master
 
-        }
-        for (int j = 0; j < firedBulletsA; j++) {
-            if (world.m_player.m_projectile2.get(j).Posy < -630 ||
-                    world.m_player.m_projectile2.get(j).Posx > 800 ||
-                    world.m_player.m_projectile2.get(j).Posx < -200) {
-                world.m_player.m_projectile2.remove(j);
-                firedBulletsA--;
-            }
-        }
-        for (int j = 0; j < firedBulletsB; j++) {
+            if (sheildTimer < timePassed) {
+                sheildTimer = 0;
+                numSheild = 0;
+                //region boundry check
+                if (curEnimy.posX > 800 || curEnimy.posX < -100 || curEnimy.posY > 1200) {
+                    world.m_EnimyList3.remove(g);
+                    enimyList--;
+                }//endregion
 
-            if (world.m_player.m_projectile3.get(j).Posy < -630 ||
-                    world.m_player.m_projectile3.get(j).Posx > 800 ||
-                    world.m_player.m_projectile3.get(j).Posx < -200) {
-                world.m_player.m_projectile3.remove(j);
-                firedBulletsB--;
+                //update enimy position
 
             }
 
-        }
-        //endregion
-        //endregion
-        if (sheildTimer < timePassed) {
-            sheildTimer = 0;
-            numSheild = 0;
+
+            //endregion
+            //region player projectil boundry check
+            for (int j = 0; j < firedBullets; j++) {
+
+                if (world.m_player.m_projectile.get(j).Posy < -630 ||
+                        world.m_player.m_projectile.get(j).Posx > 750 ||
+                        world.m_player.m_projectile.get(j).Posx < -200) {
+                    world.m_player.m_projectile.remove(j);
+                    firedBullets--;
+
+                }
+
+
+            }
+            for (int j = 0; j < firedBulletsA; j++) {
+                if (world.m_player.m_projectile2.get(j).Posy < -630 ||
+                        world.m_player.m_projectile2.get(j).Posx > 800 ||
+                        world.m_player.m_projectile2.get(j).Posx < -200) {
+                    world.m_player.m_projectile2.remove(j);
+                    firedBulletsA--;
+                }
+            }
+            for (int j = 0; j < firedBulletsB; j++) {
+
+                if (world.m_player.m_projectile3.get(j).Posy < -630 ||
+                        world.m_player.m_projectile3.get(j).Posx > 800 ||
+                        world.m_player.m_projectile3.get(j).Posx < -200) {
+                    world.m_player.m_projectile3.remove(j);
+                    firedBulletsB--;
+
+                }
+
+            }
+            //endregion
+            //endregion
+            if (sheildTimer < timePassed) {
+                sheildTimer = 0;
+                numSheild = 0;
+
+            }
+            world.update(deltaTime);//update world clock
 
         }
-        world.update(deltaTime);//update world clock
+
 
     }
     private void updatePaused(List<TouchEvent> touchEvents)

@@ -148,15 +148,32 @@ public abstract class AndroidGame extends BaseGameActivity implements Game {
         startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()),
                 REQUEST_ACHIEVEMENTS);
         //Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_fire_storm));
-       // Games.Achievements.increment(getApiClient(),getString(R.string.achievement_fire_storm),1);
-       // Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_send_them_back));
-        //Games.Achievements.increment(getApiClient(),getString(R.string.achievement_send_them_back),1);
+
        // Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_kill_50_enemies));
        // Games.Achievements.increment(getApiClient(),getString(R.string.achievement_kill_50_enemies),1);
-       // Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_cold_as_icesis));
-       // Games.Achievements.increment(getApiClient(),getString(R.string.achievement_cold_as_icesis),1);
+
        // Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_melting_snowflakes));
         //Games.Achievements.increment(getApiClient(),getString(R.string.achievement_melting_snowflakes),1);
+    }
+
+    public void incrementFirestorm(){
+        Games.Achievements.increment(getApiClient(),getString(R.string.achievement_fire_storm),1);
+    }
+
+    public void incrementEnemies(){
+        Games.Achievements.increment(getApiClient(),getString(R.string.achievement_kill_50_enemies),1);
+    }
+
+    public void unlockLevel1(){
+        Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_melting_snowflakes));
+    }
+
+    public void unlockLevel2() {
+        Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_cold_as_icesis));
+    }
+
+    public void unlockLevel3(){
+        Games.Achievements.unlock(getApiClient(),getString(R.string.achievement_send_them_back));
     }
 
     @Override

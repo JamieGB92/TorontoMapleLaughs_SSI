@@ -67,7 +67,7 @@ public class MaineMenuSceen extends Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 if (inBounds(event, playXPos, playYPos, playButton.getWidth(), playButton.getHeight()))
                 {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, GameScreen.GameState.Running));
                     game.hideBanner();
                     return;
                 }

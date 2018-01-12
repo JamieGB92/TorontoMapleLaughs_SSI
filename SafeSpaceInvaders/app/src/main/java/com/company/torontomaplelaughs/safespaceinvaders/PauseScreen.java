@@ -43,7 +43,7 @@ public class PauseScreen extends Screen {
             if (event.type == TouchEvent.TOUCH_UP) {
                 if(inBounds(event,ResumeButtonXpos,ResumeButtonYpos,ResumeButton.getWidth(),ResumeButton.getHeight()))
                 {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, GameScreen.GameState.Running));
                 }
 
             }

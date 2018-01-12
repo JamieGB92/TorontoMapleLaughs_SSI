@@ -28,7 +28,7 @@ public class LoadingScreen extends Screen {
         Assets.gunPickup_1=g.newPixmap("weapon1.jpg",  Graphics.PixmapFormat.RGB565);
         Assets.gunPickup_2=g.newPixmap("weapon2.jpg",  Graphics.PixmapFormat.RGB565);
         Assets.gunPickup_3=g.newPixmap("weapon3.jpg",  Graphics.PixmapFormat.RGB565);
-        Assets.gunPickup_4=g.newPixmap("weapon4.jpg",  Graphics.PixmapFormat.RGB565);
+        Assets.gunPickup_4=g.newPixmap("Weapon1a.png",  Graphics.PixmapFormat.RGB565);
         Assets.healthBar=g.newPixmap("HealthBar.png", Graphics.PixmapFormat.RGB565 );
         Assets.healthPickup=g.newPixmap("healthPU.png",  Graphics.PixmapFormat.RGB565);
         Assets.healthPickup_B=g.newPixmap("healthPU_B.png",  Graphics.PixmapFormat.RGB565);

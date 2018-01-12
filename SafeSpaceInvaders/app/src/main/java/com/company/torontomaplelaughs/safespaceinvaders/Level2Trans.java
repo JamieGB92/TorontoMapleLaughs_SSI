@@ -44,7 +44,7 @@ public class Level2Trans extends Screen {
             if (event.type == Input.TouchEvent.TOUCH_UP) {
                 if(inBounds(event,ContinueXpos,ContinueYpos,Continue.getWidth(),Continue.getHeight()))
                 {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, GameScreen.GameState.Runningc));
                 }
 
             }

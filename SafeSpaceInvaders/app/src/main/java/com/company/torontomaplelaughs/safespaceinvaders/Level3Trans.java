@@ -42,7 +42,7 @@ public class Level3Trans extends Screen {
             Input.TouchEvent event = touchEvents.get(i);
             if (event.type == Input.TouchEvent.TOUCH_UP) {
                 if (inBounds(event, ContinueXpos, ContinueYpos, Continue.getWidth(), Continue.getHeight())) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new HighScore(game));
                 }
 
             }
