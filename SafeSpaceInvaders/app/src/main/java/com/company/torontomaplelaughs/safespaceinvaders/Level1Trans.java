@@ -27,6 +27,7 @@ public class Level1Trans extends Screen {
     {
         super(game);
         Graphics g= game.getGraphics();
+        background=g.newPixmap("GameOver.png", Graphics.PixmapFormat.RGB565);
         Text=g.newPixmap("Level1Text.png",Graphics.PixmapFormat.RGB565);
         Continue=g.newPixmap("Continue.png",Graphics.PixmapFormat.ARGB4444);
 
@@ -66,7 +67,8 @@ public class Level1Trans extends Screen {
     public void present(float deltaTime)
     {
         Graphics g=game.getGraphics();
-        g.drawPixmap(Text,g.getWidth()/2-Text.getWidth()/2,0);
+        g.drawPixmap(background,0,0);
+        g.drawPixmap(Text,g.getWidth()/2-Text.getWidth()/2,450);
         g.drawPixmap(Continue,ContinueXpos,ContinueYpos);
 
     }

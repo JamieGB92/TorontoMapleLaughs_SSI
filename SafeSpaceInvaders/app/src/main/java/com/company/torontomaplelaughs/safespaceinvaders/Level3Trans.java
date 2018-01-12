@@ -26,6 +26,7 @@ public class Level3Trans extends Screen {
     public Level3Trans(Game game) {
         super(game);
         Graphics g = game.getGraphics();
+        background=g.newPixmap("GameOver.png", Graphics.PixmapFormat.RGB565);
         Text = g.newPixmap("Level2Text.png", Graphics.PixmapFormat.RGB565);
         Continue = g.newPixmap("Continue.png", Graphics.PixmapFormat.ARGB4444);
 
@@ -65,7 +66,8 @@ public class Level3Trans extends Screen {
     @Override
     public void present(float deltaTime) {
         Graphics g = game.getGraphics();
-        g.drawPixmap(Text, g.getWidth() / 2 - Text.getWidth() / 2, 0);
+        g.drawPixmap(background,0,0);
+        g.drawPixmap(Text, g.getWidth() / 2 - Text.getWidth() / 2, 450);
         g.drawPixmap(Continue, ContinueXpos, ContinueYpos);
 
     }
