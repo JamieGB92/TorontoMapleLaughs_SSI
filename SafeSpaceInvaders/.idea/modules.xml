@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaseGameUtils/BaseGameUtils.iml" filepath="$PROJECT_DIR$/BaseGameUtils/BaseGameUtils.iml" />
+      <module fileurl="file://C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\BaseGameUtils\BaseGameUtils.iml" filepath="C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\BaseGameUtils\BaseGameUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/SafeSpaceInvaders.iml" filepath="$PROJECT_DIR$/SafeSpaceInvaders.iml" />
+      <module fileurl="file://C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\SafeSpaceInvaders.iml" filepath="C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\SafeSpaceInvaders.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\app\app.iml" filepath="C:\Users\Jamie MBRwind\Documents\GitHub\TorontoMapleLaughs_SSI\SafeSpaceInvaders\app\app.iml" />
     </modules>
   </component>
 </project>

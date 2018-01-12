@@ -151,6 +151,7 @@ public class GameScreen extends Screen{
         healthPickup_B=Assets.healthPickup_B;
         SheildPickup=Assets.shieldPickup;
         ShotGunPickup=Assets.gunPickup_4;
+        bombpickup=Assets.Bomb;
         world.m_BgList.add(new BackGround(0,0));
         world.m_BgList.add(new BackGround(0,-BackGroundPic.getHeight()));
         world.m_BgList.add(new BackGround(0,-BackGroundPic.getHeight()*2));
@@ -168,21 +169,21 @@ public class GameScreen extends Screen{
         float accelXval=game.getInput().getAccelX();
         float accelYval=game.getInput().getAccelY();
 
-       if(state==GameState.Running)
-       {
-           updateRunning(touchEvents,accelXval,accelYval,deltaTime);
-       }
-       if(state==GameState.Runningb)
-       {
-           updateRunningb(touchEvents,accelXval,accelYval,deltaTime);
-       }
+        if(state==GameState.Running)
+        {
+            updateRunning(touchEvents,accelXval,accelYval,deltaTime);
+        }
+        if(state==GameState.Runningb)
+        {
+            updateRunningb(touchEvents,accelXval,accelYval,deltaTime);
+        }
 
-       if(state==GameState.Paused)
-       {
-           updatePaused(touchEvents);
-           Settings.save(game.getFileIO());
-           Settings.load(game.getFileIO());
-       }
+        if(state==GameState.Paused)
+        {
+            updatePaused(touchEvents);
+            Settings.save(game.getFileIO());
+            Settings.load(game.getFileIO());
+        }
 
         if(state==GameState.GameOver)
         {
@@ -193,8 +194,7 @@ public class GameScreen extends Screen{
     }
     private void updateRunning(List<TouchEvent> touchEvents,float m_AccelX, float m_AccelY, float deltaTime)
     {
-         timePassed += deltaTime;    
-        //region life check
+        //region
         if(numberOfLives <= 0) {
             Settings.addScore(score);
             Settings.save(game.getFileIO());
@@ -204,8 +204,7 @@ public class GameScreen extends Screen{
                 Assets.DeathScreen_music.play();
             game.submitScore(score);
         }
-        //endregion
-        //region touch events
+
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
@@ -231,10 +230,8 @@ public class GameScreen extends Screen{
             }
 
         }
-        //endregion
-        //region moving BG
-        BGspeed = 20;
 
+        BGspeed = 20;
         for (int k = 0; k < world.m_BgList.size(); k++) {
             world.m_BgList.get(k).posy += BGspeed;
             if (world.m_BgList.get(k).posy > 1500) {
@@ -251,8 +248,7 @@ public class GameScreen extends Screen{
             }
 
         }
-        //endregion
-        //region player movement
+
         if (m_AccelX < -0.5f) {
             world.m_player.posX += 4;
             if (m_AccelX < -2.5f) {
@@ -289,8 +285,36 @@ public class GameScreen extends Screen{
 
         int enimyList = world.m_EnimyList.size();
         int maxEnimycount = 20;
+        //region spawn pickups
+
+        if (timePassed >= puTime) {
+            int x = 0;
+            x = random.nextInt(690);
+            int y = 0;
+            y = random.nextInt(1000);
+            int t;
+            t = random.nextInt(3);
+            float time = timePassed + pickTimer;
+
+            world.m_pickUpList.add(new PickUp(x, y, t, time));
+            puTime += 5;
+        }
+        //endregion  //region spawn pickups
+
+        if (timePassed >= puTime) {
+            int x = 0;
+            x = random.nextInt(690);
+            int y = 0;
+            y = random.nextInt(1000);
+            int t;
+            t = random.nextInt(3);
+            float time = timePassed + pickTimer;
+
+            world.m_pickUpList.add(new PickUp(x, y, t, time));
+            puTime += 5;
+        }
         //endregion
-        //region enimy spawn time
+
         timePassed += deltaTime;
         if (timePassed >= spawnTime) {
             if (enimyList <= maxEnimycount) {
@@ -316,8 +340,8 @@ public class GameScreen extends Screen{
             }
             spawnTime = spawnTime + 5;
         }
-        //endregion
-        //region player projectile boundry check
+
+
         projectileSpeed = 20;
         int firedBullets = world.m_player.m_projectile.size();
 
@@ -329,13 +353,14 @@ public class GameScreen extends Screen{
             }
 
         }
-        //endregion
-        //region enimy checks and update
+
+
+
         for (int g = 0; g < enimyList; g++) {
 
 
             Enimy_TypeA curEnimy = world.m_EnimyList.get(g);
-            curEnimy.posX += curEnimy.SpeedX; //position update
+            curEnimy.posX += curEnimy.SpeedX;
             curEnimy.posY += curEnimy.SpeedY;
 
             int AxMin = world.m_player.posX;
@@ -353,7 +378,7 @@ public class GameScreen extends Screen{
                 curEnimy.fire();
                 curEnimy.shotTimer += fireRate;
             }
-            //regionenimy projectile update;
+            //projectile update;
             int projetileList = curEnimy.e_ProjectileList.size();
             for (int h = 0; h < projetileList; h++) {
                 Projectile curProjectile = curEnimy.e_ProjectileList.get(h);
@@ -373,39 +398,51 @@ public class GameScreen extends Screen{
                     curEnimy.e_ProjectileList.remove(h);
                     projetileList--;
                     if(Settings.soundEnabled)
-                        Assets.explosion_sound.play(1);
-                    numberOfLives-= 0.25;
+                        if (hasSheild()) {
+                            numSheild--;
+                        }
+                        else {
+                            numberOfLives--;
+                            if (numberOfLives <= 0) {
+                                Settings.addScore(score);
+                                Settings.save(game.getFileIO());
+                                state = GameState.GameOver;
 
-                    if(numberOfLives <= 0) {
+                                if (Settings.soundEnabled)
+                                    Assets.DeathScreen_music.play();
+                                game.submitScore(score);
+                            }
+                        }
+
+                }
+            }
+            //collision check of enimy hitting player
+            if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                    && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
+                world.m_EnimyList2.remove(g);
+                if (Settings.soundEnabled) {
+                    Assets.explosion_sound.play(1);
+                }
+                if (hasSheild()) {
+                    numSheild--;
+                }
+                else {
+                    numberOfLives--;
+                    if (numberOfLives <= 0) {
                         Settings.addScore(score);
                         Settings.save(game.getFileIO());
                         state = GameState.GameOver;
 
-                        if(Settings.soundEnabled)
+                        if (Settings.soundEnabled)
                             Assets.DeathScreen_music.play();
                         game.submitScore(score);
                     }
-
                 }
-            }
-            //endregion
-            //region collision check of enimy hitting player
-
-            if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
-                    && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
-                world.m_EnimyList.remove(g);
-                if(Settings.soundEnabled)
-                    Assets.explosion_sound.play(1);
-                numberOfLives--;
-                //spawn explosion
-
-
 
                 enimyList--;
             }
-            //endregion
 
-            //region player projectile check
+
             int p_project = world.m_player.m_projectile.size();
             for (int i = 0; i < p_project; i++) {
                 Projectile curPprojectile = world.m_player.m_projectile.get(i);
@@ -436,8 +473,6 @@ public class GameScreen extends Screen{
                 }
 
             }
-            //endregion
-
             //boundry check
             if (curEnimy.posX > 800 || curEnimy.posX < -100 || curEnimy.posY > 1200) {
                 world.m_EnimyList.remove(g);
@@ -445,10 +480,18 @@ public class GameScreen extends Screen{
                 enimyList--;
             }
         }
-        //endregion
 
 
-        //region chievos bros
+
+        if(numberOfLives <= 0) {
+            Settings.addScore(score);
+            Settings.save(game.getFileIO());
+            state = GameState.GameOver;
+
+            if(Settings.soundEnabled){
+                Assets.DeathScreen_music.play();
+                game.submitScore(score);}
+        }
         if(score==500)
         {
             world.m_EnimyList2.clear();
@@ -464,8 +507,12 @@ public class GameScreen extends Screen{
             //Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_fire_storm));
 
         }
-        //endregion
+        if(sheildTimer<timePassed)
+        {
+            sheildTimer=0;
+            numSheild=0;
 
+        }
         world.update(deltaTime);
 
     }
@@ -708,28 +755,38 @@ public class GameScreen extends Screen{
                         BxMax = BxMin + (SheildPickup.getWidth() / 2);
                         ByMax = ByMin + (SheildPickup.getHeight() / 2);
 
-                            if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                        if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
                                 && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax))
+                        {
+                            if (!hasSheild())
                             {
-                                if (!hasSheild())
+                                sheildTimer = timePassed + 10.0f;
+                                numSheild += 2;
+                            }
+                            else
+                            {
+                                if (numSheild > 2)
                                 {
-                                         sheildTimer = timePassed + 10.0f;
-                                         numSheild += 2;
+                                    numSheild++;
                                 }
-                                else
-                                {
-                                    if (numSheild > 2)
-                                    {
-                                        numSheild++;
-                                    }
-                                 sheildTimer += 10;
-                                }
-
-                                world.m_pickUpList.remove(i);
-                                puListSize--;
+                                sheildTimer += 10;
                             }
 
+                            world.m_pickUpList.remove(i);
+                            puListSize--;
+                        }
 
+
+                    }
+                    break;
+                case 3:
+                    BxMax=BxMin+bombpickup.getWidth()/2;
+                    ByMax=ByMin+bombpickup.getHeight()/2;
+                    if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
+                            && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax))
+                    {
+                        world.m_EnimyList2.clear();
+                        world.m_pickUpList.remove(i);
                     }
                     break;
             }
@@ -801,7 +858,7 @@ public class GameScreen extends Screen{
 
                     }
                 }
-            //endregion
+                //endregion
                 //region collision check if enimy is hitting player
                 if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
                         && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
@@ -868,7 +925,7 @@ public class GameScreen extends Screen{
                     int p_BxMax = BxMin + (lvl2EnimyPixmap.getWidth());
                     int p_ByMax = ByMin + (lvl2EnimyPixmap.getHeight());
 
-//scoot
+
                     //collision check player projectile hitting enimy
                     if ((p_AxMin >= p_BxMin && p_AxMin <= p_BxMax || p_AxMax >= p_BxMin && p_AxMax <= p_BxMax)
                             && (p_AyMin >= p_ByMin && p_AyMin <= p_ByMax || p_AyMax >= p_ByMin && p_AyMax <= p_ByMax)) {
@@ -921,47 +978,47 @@ public class GameScreen extends Screen{
 
             }
         }
-            //endregion
+        //endregion
         //region player projectil boundry check
-            for (int j = 0; j < firedBullets; j++) {
+        for (int j = 0; j < firedBullets; j++) {
 
-                if (world.m_player.m_projectile.get(j).Posy < -630 ||
-                        world.m_player.m_projectile.get(j).Posx > 750 ||
-                        world.m_player.m_projectile.get(j).Posx < -200) {
-                    world.m_player.m_projectile.remove(j);
-                    firedBullets--;
-
-                }
+            if (world.m_player.m_projectile.get(j).Posy < -630 ||
+                    world.m_player.m_projectile.get(j).Posx > 750 ||
+                    world.m_player.m_projectile.get(j).Posx < -200) {
+                world.m_player.m_projectile.remove(j);
+                firedBullets--;
 
             }
-            for (int j = 0; j < firedBulletsA; j++) {
-                if (world.m_player.m_projectile2.get(j).Posy < -630 ||
-                        world.m_player.m_projectile2.get(j).Posx > 800 ||
-                        world.m_player.m_projectile2.get(j).Posx <-200) {
-                    world.m_player.m_projectile2.remove(j);
-                    firedBulletsA--;
-                }
+
+        }
+        for (int j = 0; j < firedBulletsA; j++) {
+            if (world.m_player.m_projectile2.get(j).Posy < -630 ||
+                    world.m_player.m_projectile2.get(j).Posx > 800 ||
+                    world.m_player.m_projectile2.get(j).Posx <-200) {
+                world.m_player.m_projectile2.remove(j);
+                firedBulletsA--;
             }
-            for (int j = 0; j < firedBulletsB; j++) {
+        }
+        for (int j = 0; j < firedBulletsB; j++) {
 
-                if (world.m_player.m_projectile3.get(j).Posy < -630 ||
-                        world.m_player.m_projectile3.get(j).Posx > 800 ||
-                        world.m_player.m_projectile3.get(j).Posx < -200) {
-                    world.m_player.m_projectile3.remove(j);
-                    firedBulletsB--;
-
-                }
+            if (world.m_player.m_projectile3.get(j).Posy < -630 ||
+                    world.m_player.m_projectile3.get(j).Posx > 800 ||
+                    world.m_player.m_projectile3.get(j).Posx < -200) {
+                world.m_player.m_projectile3.remove(j);
+                firedBulletsB--;
 
             }
-            //endregion
-            //endregion
+
+        }
+        //endregion
+        //endregion
         if(sheildTimer<timePassed)
         {
             sheildTimer=0;
             numSheild=0;
 
         }
-            world.update(deltaTime);//update world clock
+        world.update(deltaTime);//update world clock
 
     }
     private void updatePaused(List<TouchEvent> touchEvents)
@@ -971,7 +1028,7 @@ public class GameScreen extends Screen{
             TouchEvent event = touchEvents.get(i);
             if (event.type == TouchEvent.TOUCH_DOWN) {
                 if (event.x < 256 && event.x > 416) {
-                   //zach this is where we put the pause logic. seacrh pause in this
+                    //zach this is where we put the pause logic. seacrh pause in this
                     state = GameState.Running;
                     return;
                 }
@@ -1019,73 +1076,73 @@ public class GameScreen extends Screen{
         }
 
         drawText(g, score + "", g.getWidth() / 2 - (score + "").length()*20/2, 50);
-       // if(state==GameState.Ready)
-       //{
+        // if(state==GameState.Ready)
+        //{
         //   drawReadyUI();
         //}
         if(state==GameState.Running)
-      {
-          drawWorld(world);
-          drawText(g, score + "", g.getWidth() / 2 - (score + "").length()*20/2, 50);
-         if (numberOfLives == 3){
-             g.drawPixmap(Assets.healthPickup_B,675,25);
-             g.drawPixmap(Assets.healthPickup_B,675,75);
-             g.drawPixmap(Assets.healthPickup_B,675,125);
-         }
+        {
+            drawWorld(world);
+            drawText(g, score + "", g.getWidth() / 2 - (score + "").length()*20/2, 50);
+            if (numberOfLives == 3){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
+                g.drawPixmap(Assets.healthPickup_B,675,75);
+                g.drawPixmap(Assets.healthPickup_B,675,125);
+            }
 
-          if (numberOfLives == 2){
-              g.drawPixmap(Assets.healthPickup_B,675,25);
-              g.drawPixmap(Assets.healthPickup_B,675,75);
+            if (numberOfLives == 2){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
+                g.drawPixmap(Assets.healthPickup_B,675,75);
 
-          }
+            }
 
-          if (numberOfLives == 1){
-              g.drawPixmap(Assets.healthPickup_B,675,25);
-              
-          }
-          if(numSheild>=2)
-          {
+            if (numberOfLives == 1){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
 
-              g.drawPixmap(SheildPickup,675,225);
+            }
+            if(numSheild>=2)
+            {
 
-          }
-          if(numSheild>=1)
-          {
-              g.drawPixmap(SheildPickup,675,195);
-          }
+                g.drawPixmap(SheildPickup,675,225);
 
-       }
-       if(state==GameState.Runningb)
-       {
+            }
+            if(numSheild>=1)
+            {
+                g.drawPixmap(SheildPickup,675,195);
+            }
 
-           drawWorld2(world);
-           drawText(g, score + "", g.getWidth() / 2 - (score + "").length()*20/2, 50);
-           if (numberOfLives == 3){
-               g.drawPixmap(Assets.healthPickup_B,675,25);
-               g.drawPixmap(Assets.healthPickup_B,675,75);
-               g.drawPixmap(Assets.healthPickup_B,675,125);
-           }
+        }
+        if(state==GameState.Runningb)
+        {
 
-           if (numberOfLives == 2){
-               g.drawPixmap(Assets.healthPickup_B,675,25);
-               g.drawPixmap(Assets.healthPickup_B,675,75);
+            drawWorld2(world);
+            drawText(g, score + "", g.getWidth() / 2 - (score + "").length()*20/2, 50);
+            if (numberOfLives == 3){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
+                g.drawPixmap(Assets.healthPickup_B,675,75);
+                g.drawPixmap(Assets.healthPickup_B,675,125);
+            }
 
-           }
+            if (numberOfLives == 2){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
+                g.drawPixmap(Assets.healthPickup_B,675,75);
 
-           if (numberOfLives == 1){
-               g.drawPixmap(Assets.healthPickup_B,675,25);
+            }
 
-           }
-           if(numSheild>=2)
-           {
+            if (numberOfLives == 1){
+                g.drawPixmap(Assets.healthPickup_B,675,25);
 
-               g.drawPixmap(SheildPickup,675,225);
-           }
-           if(numSheild>=1)
-           {
-               g.drawPixmap(SheildPickup,675,195);
-           }
-       }
+            }
+            if(numSheild>=2)
+            {
+
+                g.drawPixmap(SheildPickup,675,225);
+            }
+            if(numSheild>=1)
+            {
+                g.drawPixmap(SheildPickup,675,195);
+            }
+        }
      /*   if(state==GameState.Paused)
        {
             drawPausedUI;
@@ -1096,7 +1153,7 @@ public class GameScreen extends Screen{
         }
         //if(state==GameState.Paused)
         //{
-          //  drawPausedUI;
+        //  drawPausedUI;
         //}
 
 
@@ -1154,7 +1211,19 @@ public class GameScreen extends Screen{
 
             Projectile projectileA = world.m_player.m_projectile.get(i);
             g.drawPixmap(Assets.projectile, projectileA.Posx, projectileA.Posy);
+        }int len2=world.m_player.m_projectile2.size();
+        for (int i = 0; i < len2; i++) {
+
+            Projectile projectileA = world.m_player.m_projectile2.get(i);
+            g.drawPixmap(Assets.projectile, projectileA.Posx, projectileA.Posy);
         }
+        int len3=world.m_player.m_projectile3.size();
+        for (int i = 0; i < len3; i++) {
+
+            Projectile projectileA = world.m_player.m_projectile3.get(i);
+            g.drawPixmap(Assets.projectile, projectileA.Posx, projectileA.Posy);
+        }
+
 
         g.drawPixmap(playerPixmap,p_Pos_x,world.m_player.posY);
         int ben=world.m_EnimyList.size();
@@ -1169,7 +1238,26 @@ public class GameScreen extends Screen{
                 g.drawPixmap(Assets.projectile, curProjectile.Posx, curProjectile.Posy);
             }
         }
+        int puList=world.m_pickUpList.size();
+        for(int i=0; i<puList; i++)
+        {
+            PickUp curPickup=world.m_pickUpList.get(i);
+            int type=curPickup.type;
+            switch(type)
+            {
+                case(0):
+                    g.drawPixmap(healthPickup_B,curPickup.xPos,curPickup.yPos);
+                    break;
+                case(1):
+                    g.drawPixmap(ShotGunPickup,curPickup.xPos,curPickup.yPos);
+                    break;
+                case(2):
+                    g.drawPixmap(SheildPickup,curPickup.xPos,curPickup.yPos);
+                    break;
 
+            }
+
+        }
 
         g.drawPixmap(playerPixmap,p_Pos_x,p_Pos_Y);
 
