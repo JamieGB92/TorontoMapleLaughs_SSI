@@ -193,7 +193,8 @@ public class GameScreen extends Screen{
     }
     private void updateRunning(List<TouchEvent> touchEvents,float m_AccelX, float m_AccelY, float deltaTime)
     {
-        //region
+         timePassed += deltaTime;    
+        //region life check
         if(numberOfLives <= 0) {
             Settings.addScore(score);
             Settings.save(game.getFileIO());
@@ -203,7 +204,8 @@ public class GameScreen extends Screen{
                 Assets.DeathScreen_music.play();
             game.submitScore(score);
         }
-
+        //endregion
+        //region touch events
         int len = touchEvents.size();
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
@@ -229,8 +231,10 @@ public class GameScreen extends Screen{
             }
 
         }
-
+        //endregion
+        //region moving BG
         BGspeed = 20;
+
         for (int k = 0; k < world.m_BgList.size(); k++) {
             world.m_BgList.get(k).posy += BGspeed;
             if (world.m_BgList.get(k).posy > 1500) {
@@ -247,7 +251,8 @@ public class GameScreen extends Screen{
             }
 
         }
-
+        //endregion
+        //region player movement
         if (m_AccelX < -0.5f) {
             world.m_player.posX += 4;
             if (m_AccelX < -2.5f) {
@@ -284,8 +289,8 @@ public class GameScreen extends Screen{
 
         int enimyList = world.m_EnimyList.size();
         int maxEnimycount = 20;
-
-
+        //endregion
+        //region enimy spawn time
         timePassed += deltaTime;
         if (timePassed >= spawnTime) {
             if (enimyList <= maxEnimycount) {
@@ -311,8 +316,8 @@ public class GameScreen extends Screen{
             }
             spawnTime = spawnTime + 5;
         }
-
-
+        //endregion
+        //region player projectile boundry check
         projectileSpeed = 20;
         int firedBullets = world.m_player.m_projectile.size();
 
@@ -324,14 +329,13 @@ public class GameScreen extends Screen{
             }
 
         }
-
-
-
+        //endregion
+        //region enimy checks and update
         for (int g = 0; g < enimyList; g++) {
 
 
             Enimy_TypeA curEnimy = world.m_EnimyList.get(g);
-            curEnimy.posX += curEnimy.SpeedX;
+            curEnimy.posX += curEnimy.SpeedX; //position update
             curEnimy.posY += curEnimy.SpeedY;
 
             int AxMin = world.m_player.posX;
@@ -349,7 +353,7 @@ public class GameScreen extends Screen{
                 curEnimy.fire();
                 curEnimy.shotTimer += fireRate;
             }
-            //projectile update;
+            //regionenimy projectile update;
             int projetileList = curEnimy.e_ProjectileList.size();
             for (int h = 0; h < projetileList; h++) {
                 Projectile curProjectile = curEnimy.e_ProjectileList.get(h);
@@ -384,7 +388,9 @@ public class GameScreen extends Screen{
 
                 }
             }
-            //collision check of enimy hitting player
+            //endregion
+            //region collision check of enimy hitting player
+
             if ((AxMin >= BxMin && AxMin <= BxMax || AxMax >= BxMin && AxMax <= BxMax)
                     && (AyMin >= ByMin && AyMin <= ByMax || AyMax >= ByMin && AyMax <= ByMax)) {
                 world.m_EnimyList.remove(g);
@@ -397,8 +403,9 @@ public class GameScreen extends Screen{
 
                 enimyList--;
             }
+            //endregion
 
-
+            //region player projectile check
             int p_project = world.m_player.m_projectile.size();
             for (int i = 0; i < p_project; i++) {
                 Projectile curPprojectile = world.m_player.m_projectile.get(i);
@@ -429,6 +436,8 @@ public class GameScreen extends Screen{
                 }
 
             }
+            //endregion
+
             //boundry check
             if (curEnimy.posX > 800 || curEnimy.posX < -100 || curEnimy.posY > 1200) {
                 world.m_EnimyList.remove(g);
@@ -436,18 +445,10 @@ public class GameScreen extends Screen{
                 enimyList--;
             }
         }
+        //endregion
 
 
-
-        if(numberOfLives <= 0) {
-        Settings.addScore(score);
-        Settings.save(game.getFileIO());
-        state = GameState.GameOver;
-
-        if(Settings.soundEnabled){
-            Assets.DeathScreen_music.play();
-        game.submitScore(score);}
-    }
+        //region chievos bros
         if(score==500)
         {
             world.m_EnimyList2.clear();
@@ -463,6 +464,7 @@ public class GameScreen extends Screen{
             //Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_fire_storm));
 
         }
+        //endregion
 
         world.update(deltaTime);
 
