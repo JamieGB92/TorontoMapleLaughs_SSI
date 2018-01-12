@@ -18,8 +18,10 @@ public class LoadingScreen extends Screen {
     {
         Graphics g=game.getGraphics();
         Assets.mainMenu_BG=g.newPixmap("bg.png",Graphics.PixmapFormat.RGB565);
+
         Assets.titleLogo=g.newPixmap("mainlogo.png", Graphics.PixmapFormat.RGB565);
-        Assets.optionsLogo=g.newPixmap("op_but.png", PixmapFormat.ARGB4444);
+        Assets.HowToPlay=g.newPixmap("HowToPlay.png", Graphics.PixmapFormat.RGB565);
+        Assets.HTPInst=g.newPixmap("Instructions.png", Graphics.PixmapFormat.RGB565);
         Assets.playerShip=g.newPixmap("Standard.png",  Graphics.PixmapFormat.RGB565);
         Assets.projectile=g.newPixmap("projectile1.png",  Graphics.PixmapFormat.RGB565);
         Assets.damageBoost=g.newPixmap("projectile.gif",  Graphics.PixmapFormat.RGB565);
@@ -46,9 +48,13 @@ public class LoadingScreen extends Screen {
         Assets.Level2_BG=g.newPixmap("SpaceRed.jpg",Graphics.PixmapFormat.RGB565);
         Assets.Level2_Enemy=g.newPixmap("isisship.png",Graphics.PixmapFormat.RGB565);
         Assets.Level3_BG=g.newPixmap("SpaceWhite.jpg",Graphics.PixmapFormat.RGB565);
+        Assets.Level3_Enemy=g.newPixmap("mexicanship.png",Graphics.PixmapFormat.RGB565);
         Assets.GameOver_BG=g.newPixmap("GameOver.png",Graphics.PixmapFormat.RGB565);
         Assets.GameOver_Text=g.newPixmap("GameOverText.png",Graphics.PixmapFormat.RGB565);
-        Assets.Level3_Enemy=g.newPixmap("mexicanship.png",Graphics.PixmapFormat.RGB565);
+        Assets.Level1Text=g.newPixmap("Level1Text.png", PixmapFormat.RGB565);
+        Assets.Level2Text=g.newPixmap("Level2Text.png", PixmapFormat.RGB565);
+        Assets.Level3Text=g.newPixmap("Level3Text.png", PixmapFormat.RGB565);
+        Assets.Continue=g.newPixmap("Continue.png", PixmapFormat.RGB565);
         Assets.explosionA_Placeholder=g.newPixmap("explosion1.png",Graphics.PixmapFormat.RGB565);
         Assets.explosionB_Placeholder=g.newPixmap("explosion2.png",Graphics.PixmapFormat.RGB565);
         Assets.explosionC_Placeholder=g.newPixmap("explosion3.png",Graphics.PixmapFormat.RGB565);

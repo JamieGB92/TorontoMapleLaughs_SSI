@@ -158,7 +158,7 @@ public class GameScreen extends Screen{
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()));
         world.m_BgList2.add(new BackGround(0,-BackGroundPic2.getHeight()*2));
         random=new Random();
-        state=GameState.Runningb;
+        state=GameState.Running;
 
     }
     @Override
@@ -453,6 +453,7 @@ public class GameScreen extends Screen{
             world.m_EnimyList2.clear();
             world.m_EnimyList.clear();
             world.m_player.m_projectile.clear();
+
             state=GameState.Runningb;
 
             //Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_cold_as_icesis));

@@ -17,7 +17,7 @@ public class MaineMenuSceen extends Screen {
     private static Pixmap background;
     private static Pixmap title;
     private static Pixmap highScoreButton;
-    private static Pixmap optionsButton;
+    private static Pixmap howtoplay;
     private static Pixmap playButton;
 
 
@@ -28,8 +28,8 @@ public class MaineMenuSceen extends Screen {
     private int highScoreXPos;
     private int highScoreYPos;
 
-    private int optionXPos;
-    private int optionYPos;
+    private int howtoplayXPos;
+    private int howtoplayYPos;
 
     public MaineMenuSceen(Game game) {
         super(game);
@@ -38,7 +38,7 @@ public class MaineMenuSceen extends Screen {
         title=g.newPixmap("mainlogo.png",Graphics.PixmapFormat.RGB565);
         playButton = g.newPixmap("start_but.png", Graphics.PixmapFormat.ARGB4444);
         highScoreButton=g.newPixmap("hs_but.png",Graphics.PixmapFormat.ARGB4444);
-        optionsButton=g.newPixmap("op_but.png",Graphics.PixmapFormat.ARGB4444);
+        howtoplay=g.newPixmap("HowToPlay.png",Graphics.PixmapFormat.ARGB4444);
 
         playXPos = g.getWidth() / 2 - playButton.getWidth() / 2;
         playYPos = g.getHeight() / 2 - playButton.getHeight() / 2;
@@ -46,8 +46,8 @@ public class MaineMenuSceen extends Screen {
         highScoreXPos=playXPos;
         highScoreYPos=playYPos+highScoreButton.getHeight()*2;
 
-        optionXPos=playXPos;
-        optionYPos=highScoreYPos+optionsButton.getHeight()*2;
+        howtoplayXPos=playXPos;
+        howtoplayYPos=highScoreYPos+howtoplay.getHeight()*2;
 
 
 
@@ -79,9 +79,9 @@ public class MaineMenuSceen extends Screen {
                     game.hideBanner();
                     return;
                 }
-                if (inBounds(event, optionXPos, optionYPos, optionsButton.getWidth(), optionsButton.getHeight()))
+                if (inBounds(event, howtoplayXPos, howtoplayYPos, howtoplay.getWidth(), howtoplay.getHeight()))
                 {
-                    game.setScreen(new Options(game));
+                    game.setScreen(new HowToPlay(game));
                     game.hideBanner();
                     return;
                 }
@@ -98,7 +98,7 @@ public class MaineMenuSceen extends Screen {
         g.drawPixmap(title,g.getWidth()/2-title.getWidth()/2,0);
         g.drawPixmap(playButton,playXPos,playYPos);
         g.drawPixmap(highScoreButton,highScoreXPos,highScoreYPos);
-        g.drawPixmap(optionsButton,optionXPos,optionYPos);
+        g.drawPixmap(howtoplay,g.getWidth()/2-howtoplay.getWidth()/2,howtoplayYPos);
 
     }
     @Override
