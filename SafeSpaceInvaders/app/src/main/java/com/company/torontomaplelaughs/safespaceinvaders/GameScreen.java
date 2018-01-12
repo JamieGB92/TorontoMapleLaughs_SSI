@@ -453,7 +453,7 @@ public class GameScreen extends Screen{
             world.m_EnimyList2.clear();
             world.m_EnimyList.clear();
             world.m_player.m_projectile.clear();
-
+            game.setScreen(new Level1Trans(game));
             state=GameState.Runningb;
 
             //Games.Achievements.unlock(getApiClient(), getString(R.string.achievement_cold_as_icesis));
@@ -954,6 +954,15 @@ public class GameScreen extends Screen{
             }
             //endregion
             //endregion
+
+        if(score==2000) {
+            world.m_EnimyList2.clear();
+            world.m_EnimyList.clear();
+            world.m_player.m_projectile.clear();
+            game.setScreen(new Level2Trans(game));
+            //state=GameState.Runningb;
+        }
+
         if(sheildTimer<timePassed)
         {
             sheildTimer=0;
