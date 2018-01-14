@@ -67,6 +67,8 @@ public class Assets {
     public static Pixmap Continue;
     public static Pixmap HowToPlay;
     public static Pixmap HTPInst;
+    public static Pixmap Boss;
+    public static Pixmap Boss_BG;
 
 
 

@@ -49,6 +49,8 @@ public class LoadingScreen extends Screen {
         Assets.Level2_Enemy=g.newPixmap("isisship.png",Graphics.PixmapFormat.RGB565);
         Assets.Level3_BG=g.newPixmap("SpaceWhite.jpg",Graphics.PixmapFormat.RGB565);
         Assets.Level3_Enemy=g.newPixmap("mexicanship.png",Graphics.PixmapFormat.RGB565);
+        Assets.Boss=g.newPixmap("Boss1.png",Graphics.PixmapFormat.RGB565);
+        Assets.Boss_BG=g.newPixmap("BossSpace.png",Graphics.PixmapFormat.RGB565);
         Assets.GameOver_BG=g.newPixmap("GameOver.png",Graphics.PixmapFormat.RGB565);
         Assets.GameOver_Text=g.newPixmap("GameOverText.png",Graphics.PixmapFormat.RGB565);
         Assets.Level1Text=g.newPixmap("Level1Text.png", PixmapFormat.RGB565);
