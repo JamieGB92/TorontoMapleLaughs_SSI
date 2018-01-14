@@ -540,7 +540,7 @@ public class GameScreen extends Screen {
                 if (hasSheild()) {
                     numSheild--;
                 } else {
-                    numberOfLives--;
+                    numberOfLives-= 0.25;
                     if (numberOfLives <= 0) {
                         Settings.addScore(score);
                         Settings.save(game.getFileIO());
@@ -1004,7 +1004,7 @@ public class GameScreen extends Screen {
                     if (hasSheild()) {
                         numSheild--;
                     } else {
-                        numberOfLives--;
+                        numberOfLives-= 0.25;
                         if (numberOfLives <= 0) {
                             Settings.addScore(score);
                             Settings.save(game.getFileIO());
@@ -1538,7 +1538,7 @@ public class GameScreen extends Screen {
                     if (hasSheild()) {
                         numSheild--;
                     } else {
-                        numberOfLives--;
+                        numberOfLives-= 0.25;
                         if (numberOfLives <= 0) {
                             Settings.addScore(score);
                             Settings.save(game.getFileIO());
