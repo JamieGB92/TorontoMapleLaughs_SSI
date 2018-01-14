@@ -1177,7 +1177,7 @@ public class GameScreen extends Screen {
         }
         world.update(deltaTime);//update world clock
 
-        if (score == 2000) {
+        if (score == 1000) {
             world.m_EnimyList2.clear();
             world.m_EnimyList.clear();
             world.m_player.m_projectile.clear();
@@ -1191,6 +1191,7 @@ public class GameScreen extends Screen {
     private void updateRunningc(List<TouchEvent> touchEvents, float m_AccelX, float m_AccelY, float deltaTime) {
         int len = touchEvents.size();
         timePassed += deltaTime;
+
 
         //region touch UI code
         for (int i = 0; i < len; i++) {
@@ -1704,7 +1705,7 @@ public class GameScreen extends Screen {
             //endregion
 
 
-            if (score == 4000) {
+            if (score == 1500) {
                 world.m_EnimyList2.clear();
                 world.m_EnimyList.clear();
                 world.m_player.m_projectile.clear();

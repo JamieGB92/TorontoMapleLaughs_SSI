@@ -63,6 +63,7 @@ public class Assets {
     public static Pixmap Level1Text;
     public static Pixmap Level2Text;
     public static Pixmap Level3Text;
+    public static Pixmap BossWin;
     public static Pixmap Continue;
     public static Pixmap HowToPlay;
     public static Pixmap HTPInst;

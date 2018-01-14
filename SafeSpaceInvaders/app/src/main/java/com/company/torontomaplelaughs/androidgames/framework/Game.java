@@ -18,7 +18,7 @@ public interface Game
     public void showBanner();
     public void hideBanner();
     public void showInterstitialAd();
-    public void unlockAchievements();
+    //public void unlockAchievements();
     public void unlockLevel1();
     public void unlockLevel2();
     public void unlockLevel3();

@@ -9,10 +9,10 @@ import com.company.torontomaplelaughs.androidgames.framework.Screen;
 import java.util.List;
 
 /**
- * Created by Zachary on 1/12/2018.
+ * Created by Zachary on 1/14/2018.
  */
 
-public class Level3Trans extends Screen {
+public class BossWin extends Screen {
     private static Pixmap background;
     private static Pixmap Text;
     private static Pixmap Continue;
@@ -23,11 +23,11 @@ public class Level3Trans extends Screen {
     private int ContinueXpos;
     private int ContinueYpos = 1000;
 
-    public Level3Trans(Game game) {
+    public BossWin(Game game) {
         super(game);
         Graphics g = game.getGraphics();
         background=g.newPixmap("GameOver.png", Graphics.PixmapFormat.RGB565);
-        Text = g.newPixmap("Level3Text.png", Graphics.PixmapFormat.RGB565);
+        Text = g.newPixmap("BossText.png", Graphics.PixmapFormat.RGB565);
         Continue = g.newPixmap("Continue.png", Graphics.PixmapFormat.ARGB4444);
 
         ContinueXpos = g.getWidth() / 2 - Continue.getWidth() / 2;

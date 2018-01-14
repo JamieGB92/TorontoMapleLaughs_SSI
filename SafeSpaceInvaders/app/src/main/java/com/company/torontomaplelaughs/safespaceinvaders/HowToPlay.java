@@ -32,8 +32,8 @@ public class HowToPlay extends Screen {
     private int titleXpos;
     private int titleYpos;
 
-    private int mainMenuXpos=50;
-    private int mainMenuYpos=1200;
+    private int mainMenuXpos;
+    private int mainMenuYpos=1100;
 
     public HowToPlay (Game game)
     {
@@ -56,8 +56,8 @@ public class HowToPlay extends Screen {
 
         for (int i = 0; i < len; i++) {
             TouchEvent event = touchEvents.get(i);
-            if (event.type == TouchEvent.TOUCH_UP) {
-                if(inBounds(event,mainMenuXpos,mainMenuYpos,mainMenuButton.getWidth(),mainMenuButton.getHeight()))
+            if (event.type == TouchEvent.TOUCH_DOWN) {
+                if(inBounds(event,mainMenuXpos,mainMenuYpos,mainMenuButton.getWidth()*2,mainMenuButton.getHeight()*2))
                 {
                     game.setScreen(new MaineMenuSceen(game));
                 }

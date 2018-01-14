@@ -54,6 +54,7 @@ public class LoadingScreen extends Screen {
         Assets.Level1Text=g.newPixmap("Level1Text.png", PixmapFormat.RGB565);
         Assets.Level2Text=g.newPixmap("Level2Text.png", PixmapFormat.RGB565);
         Assets.Level3Text=g.newPixmap("Level3Text.png", PixmapFormat.RGB565);
+        Assets.BossWin=g.newPixmap("BossText.png", PixmapFormat.RGB565);
         Assets.Continue=g.newPixmap("Continue.png", PixmapFormat.RGB565);
         Assets.explosionA_Placeholder=g.newPixmap("explosion1.png",Graphics.PixmapFormat.RGB565);
         Assets.explosionB_Placeholder=g.newPixmap("explosion2.png",Graphics.PixmapFormat.RGB565);
