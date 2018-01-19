@@ -5,21 +5,19 @@ Save this file as res/values/games-ids.xml in your project.
 -->
 <resources>
     <!-- app_id -->
-    <string name="app_id" translatable="false">174569776478</string>
-    <!-- package_name -->
-    <string name="package_name" translatable="false">com.company.torontomaplelaughs.safespaceinvaders</string>
-    <!-- achievement Kill 50 Enemies -->
-    <string name="achievement_kill_50_enemies" translatable="false">CgkI3sqtqYoFEAIQAA</string>
-    <!-- achievement Fire Storm -->
-    <string name="achievement_fire_storm" translatable="false">CgkI3sqtqYoFEAIQAQ</string>
+    <string name="app_id" translatable="false">984277862441</string>
     <!-- achievement Melting Snowflakes -->
-    <string name="achievement_melting_snowflakes" translatable="false">CgkI3sqtqYoFEAIQAg</string>
-    <!-- achievement Send Them Back! -->
-    <string name="achievement_send_them_back" translatable="false">CgkI3sqtqYoFEAIQAw</string>
-    <!-- achievement Cold as Ice-SIS -->
-    <string name="achievement_cold_as_icesis" translatable="false">CgkI3sqtqYoFEAIQBA</string>
+    <string name="achievement_melting_snowflakes" translatable="false">CgkIqZCh3NIcEAIQAQ</string>
+    <!-- achievement Cold as Ice-sis -->
+    <string name="achievement_cold_as_icesis" translatable="false">CgkIqZCh3NIcEAIQAg</string>
+    <!-- achievement Send Them Back -->
+    <string name="achievement_send_them_back" translatable="false">CgkIqZCh3NIcEAIQAw</string>
+    <!-- achievement Fire Storm -->
+    <string name="achievement_fire_storm" translatable="false">CgkIqZCh3NIcEAIQBA</string>
+    <!-- achievement Kill 50 Enemies -->
+    <string name="achievement_kill_50_enemies" translatable="false">CgkIqZCh3NIcEAIQBQ</string>
     <!-- leaderboard Most Bad-Ass Killas Around -->
-    <string name="leaderboard_most_badass_killas_around" translatable="false">CgkI3sqtqYoFEAIQBQ</string>
+    <string name="leaderboard_most_badass_killas_around" translatable="false">CgkIqZCh3NIcEAIQBg</string>
     <string name="Game_Over">ca-app-pub-1631805669376332/1694512866</string>
     <string name="Main_Menu">ca-app-pub-1631805669376332/2207263158</string>
     <string name="Scoring">ca-app-pub-1631805669376332/6807238741</string>

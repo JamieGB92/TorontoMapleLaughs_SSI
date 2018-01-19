@@ -17,7 +17,7 @@ import com.company.torontomaplelaughs.androidgames.framework.Game;
 import com.company.torontomaplelaughs.androidgames.framework.Graphics;
 import com.company.torontomaplelaughs.androidgames.framework.Input;
 import com.company.torontomaplelaughs.androidgames.framework.Screen;
-import com.company.torontomaplelaughs.safespaceinvaders.R;
+import com.company.torontomaplelaughs.ssi.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
